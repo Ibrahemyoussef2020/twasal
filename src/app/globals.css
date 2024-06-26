@@ -2,3 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+    direction: rtl; 
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+}
