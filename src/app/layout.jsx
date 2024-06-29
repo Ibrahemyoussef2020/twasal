@@ -13,12 +13,19 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ar">
       <body className={inter.className}>
-        <div className=" flex justify-between max-w-[1000px] mx-auto p-2">
-          <News />
-          <main>
+        <div className=" flex justify-between max-w-[1200px] mx-auto p-3">
+          <main> 
             {children}
           </main>
-          <Sidebar />
+
+          <div className="">
+           <News />
+          </div>
+        
+          
+          <div className="hidden sm:inline  border-r h-screen">
+            <Sidebar />  
+          </div>
         </div>
       </body>
     </html>
