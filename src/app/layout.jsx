@@ -13,9 +13,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ar">
       <body>
-        <div className=" flex justify-between max-w-[1200px] mx-auto p-3">
+        <div className=" flex justify-between max-w-[1200px] mx-auto px-3 py-2">
          
-          <div className="hidden sm:inline  border-r h-screen">
+          <div className="hidden sm:inline  border-l pl-2 h-screen">
             <Sidebar />  
           </div>
 
@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
             {children}
           </main>
 
-          <div className="g">
+          <div className="flex  h-screen lg:flex flex-col border-r pr-1">
            <News />
           </div>
         </div>
