@@ -20,7 +20,6 @@ const News = () => {
         return res.json()
       })
      .then((data) => {
-          console.log(data.news)
           setNews(data.news);
           setAllNews(data.news);
       })
