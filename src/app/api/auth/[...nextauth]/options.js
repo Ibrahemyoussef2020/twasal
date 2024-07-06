@@ -13,9 +13,3 @@ export const authOptions = {
   ],
   debug: true,
 };
-
-/*function name() {
-  console.log(process.env.GITHUB_CLIENT_ID);
-  console.log(process.env.GITHUB_CLIENT_SECRET);
-}
-name() */

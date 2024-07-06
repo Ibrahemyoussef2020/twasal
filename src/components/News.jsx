@@ -11,13 +11,16 @@ const News = () => {
   const [newsCount, setNewsCount] = useState(3);
 
 
-  console.log('API URL:', process.env.GITHUB_CLIENT_SECRET);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const fetchNews = async () => {
         try {
           const response = await fetch('https://ibrahemyoussef2020.github.io/news-api-in-arabic/arabic-news.json');
+
+          if (!response) {
+            return false
+          }
           const data = await response.json();
           setNews(data.news);
           setAllNews(data.news);
@@ -30,9 +33,9 @@ const News = () => {
     }
   }, []);
 
-  /*if (!news || news.length === 0) {
+  if (!news || news.length === 0) {
     return <h2 className="text-3xl">تحميل الأخبار...</h2>;
-  } */
+  } 
 
   return (
     <aside>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FaXTwitter } from "react-icons/fa6";
 import { IoHomeSharp } from "react-icons/io5";
-//import { LoginBtn } from "./LoginBtn";
+import  LoginBtn  from "./LoginBtn";
 
 const Sidebar = () => {
   return (
@@ -17,6 +17,7 @@ const Sidebar = () => {
         </span>
       </Link>
 
+      <LoginBtn />
      
     </aside>
   )
