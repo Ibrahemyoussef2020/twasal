@@ -31,14 +31,7 @@ export default function RootLayout({ children }) {
               {children}
             </main>
             <div className="flex h-screen lg:flex flex-col border-r pr-1">
-             
-             {
-
-              process.env.NODE_ENV === 'development' ? <News />
-              : <div>News server side</div>
-              
-             }
-             
+              <News />  
             </div>
           </div>
         </AuthProvider>
