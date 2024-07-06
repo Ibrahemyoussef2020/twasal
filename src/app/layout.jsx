@@ -13,6 +13,8 @@ export const metadata = {
 };
 
 
+console.log( process.env.NODE_ENV );
+
 
 export default function RootLayout({ children }) {
   return (
@@ -29,7 +31,14 @@ export default function RootLayout({ children }) {
               {children}
             </main>
             <div className="flex h-screen lg:flex flex-col border-r pr-1">
-             <News />
+             
+             {
+
+              process.env.NODE_ENV === 'development' ? <News />
+              : <div>News server side</div>
+              
+             }
+             
             </div>
           </div>
         </AuthProvider>

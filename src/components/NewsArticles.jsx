@@ -8,6 +8,11 @@ const NewsArticles = ({
 }) => {
 
 
+    if (!news || news.length === 0) {
+        return <h2 className="text-3xl"> لا يوجد مقالات تتضمن هذا</h2>;
+    }
+
+
   return (
     <div className=" text-gray-700 bg-gray-100 space-y-3 rounded-xl pt-2 pr-2 max-w-[400px]">
         <h2 className="text-xl my-2 px-1 font-bold">اطلع على آخر المستجدات</h2>

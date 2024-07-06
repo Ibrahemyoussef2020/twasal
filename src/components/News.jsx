@@ -33,12 +33,12 @@ const News = () => {
     }
   }, []);
 
-  if (!news || news.length === 0) {
-    return <h2 className="text-3xl">تحميل الأخبار...</h2>;
+  if (!allNews || allNews.length === 0) {
+    return <h2 className="text-3xl min-w-[390px]">تحميل الأخبار...</h2>;
   } 
 
   return (
-    <aside>
+    <aside className=" min-w-[390px]">
       <Search 
         news={news}
         setNews={setNews}

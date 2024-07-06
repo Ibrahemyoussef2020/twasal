@@ -11,5 +11,4 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
-  debug: true,
 };
