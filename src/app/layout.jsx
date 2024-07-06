@@ -1,6 +1,9 @@
+import React, { lazy, Suspense } from 'react';
+
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { News, Sidebar } from "@/components";
+
+import { AuthProvider , News , Sidebar} from '../components';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -9,24 +12,30 @@ export const metadata = {
   description: "Egyption social media ",
 };
 
+
+//const LazyNews = lazy(() => import('../components/News'));
+
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="ar">
+    <html lang="en">
+      <head>
+        {/* Add any additional <head> elements here */}
+      </head>
       <body>
-        <div className=" flex justify-between max-w-[1200px] mx-auto px-3 py-2">
-         
-          <div className="hidden sm:inline  border-l pl-2 h-screen">
-            <Sidebar />  
+        <AuthProvider>
+          <div className="flex justify-between max-w-[1200px] mx-auto px-3 py-2">
+            <div className="hidden sm:inline border-l pl-2 h-screen">
+              <Sidebar /> {/* Server component */}
+            </div>
+            <main className="flex-grow">
+              {children}
+            </main>
+            <div className="flex h-screen lg:flex flex-col border-r pr-1">
+              <News /> 
+            </div>
           </div>
-
-          <main> 
-            {children}
-          </main>
-
-          <div className="flex  h-screen lg:flex flex-col border-r pr-1">
-           <News />
-          </div>
-        </div>
+        </AuthProvider>
       </body>
     </html>
   );

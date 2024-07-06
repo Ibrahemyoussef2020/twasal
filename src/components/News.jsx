@@ -1,31 +1,38 @@
 "use client";
 
-import React, { useEffect, useState } from 'react'
-import Search from './Search'
+import dynamic from "next/dynamic";
+import React, { useEffect, useState } from 'react';
+import Search from './Search';
 import NewsArticles from './NewsArticles';
 
 const News = () => {
+  const [news, setNews] = useState([]);
+  const [allNews, setAllNews] = useState([]);
+  const [newsCount, setNewsCount] = useState(3);
 
-  const [news , setNews] = useState([]);
-  const [allNews , setAllNews] = useState([]);
-  const [newsCount , setNewsCount] = useState(3);
 
-  useEffect(()=>{
-     fetch('https://ibrahemyoussef2020.github.io/news-api-in-arabic/arabic-news.json')
-      .then((res) => {
+  console.log('API URL:', process.env.GITHUB_CLIENT_SECRET);
 
-        if (!res.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        return res.json()
-      })
-     .then((data) => {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const fetchNews = async () => {
+        try {
+          const response = await fetch('https://ibrahemyoussef2020.github.io/news-api-in-arabic/arabic-news.json');
+          const data = await response.json();
           setNews(data.news);
           setAllNews(data.news);
-      })
-   
-  },[newsCount])
+        } catch (error) {
+          console.error('Failed to fetch news:', error);
+        }
+      };
 
+      fetchNews();
+    }
+  }, []);
+
+  /*if (!news || news.length === 0) {
+    return <h2 className="text-3xl">تحميل الأخبار...</h2>;
+  } */
 
   return (
     <aside>
@@ -43,7 +50,7 @@ const News = () => {
         setNewsCount={setNewsCount}
       />
     </aside>
-  )
-}
+  );
+};
 
 export default News

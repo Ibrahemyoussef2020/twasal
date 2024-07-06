@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FaXTwitter } from "react-icons/fa6";
 import { IoHomeSharp } from "react-icons/io5";
+//import { LoginBtn } from "./LoginBtn";
 
 const Sidebar = () => {
   return (
@@ -16,9 +17,7 @@ const Sidebar = () => {
         </span>
       </Link>
 
-      <button className="hidden lg:inline bg-green-600 text-white font-semibold rounded-full py-2 px-4 mt-4 w-48 hover:bg-green-700 transition-all duration-200 shadow-md">
-        تسجيل الدخول
-      </button>
+     
     </aside>
   )
 }
