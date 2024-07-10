@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
             <main className="flex-grow">
               {children}
             </main>
-            <div className="hidden h-screen lg:flex flex-col border-r border-b  pr-1">
+            <div className="hidden h-screen lg:flex flex-col">
               <News />  
             </div>
           </div>

@@ -38,7 +38,7 @@ const News = () => {
   } 
 
   return (
-    <aside className=" min-w-[390px]">
+    <aside className=" min-w-[390px] bg-gray-100 space-y-3 rounded-xl pt-2 px-2 max-w-[400px]">
       <Search 
         news={news}
         setNews={setNews}

@@ -25,11 +25,11 @@ const Search = ({
     },[debouncedValue])
    
   return (
-    <div className=' sticky top-0 bg-white px-2'>
+    <div className='sticky top-0'>
         <input 
             type="text" 
             placeholder='ابحث عن أخبارك' 
-            className=' bg-gray-100 border border-200 rounded-2x text-sm w-full pr-4 pl-3 py-2 outline-gray-300 outline-1'
+            className=' bg-gray-100 border border-gray-300 rounded-md text-sm w-full pr-4 pl-3 py-2 outline-gray-300 outline-1'
             onChange={e=> setSearchValue(e.target.value) }
         />
     </div>
