@@ -9,4 +9,12 @@ export const authOptions = {
         authorization: { params: { scope: 'read:user user:email' } },
     }),
   ],
+  callbacks:{
+    async session({session,token}){
+      session.user.id = token.sub ;
+      session.user.username = session.user.name?.split(' ').join('');
+      console.log('ss' , session);
+      return session
+    }
+  }
 };
