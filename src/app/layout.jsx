@@ -13,8 +13,6 @@ export const metadata = {
 };
 
 
-console.log( process.env.NODE_ENV );
-
 
 export default function RootLayout({ children }) {
   return (
@@ -24,13 +22,15 @@ export default function RootLayout({ children }) {
       <body>
         <AuthProvider>
           <div className="flex justify-between max-w-[1200px] mx-auto px-3 py-2">
-            <div className="hidden sm:inline border-l pl-2 h-screen">
-              <Sidebar /> 
+            <div className=' min-w-[100px] lg:min-w-[215px] min-h-[100%]'>
+              <div className="fixed border-l border-b pl-2 h-screen">
+                <Sidebar /> 
+              </div>
             </div>
             <main className="flex-grow">
               {children}
             </main>
-            <div className="flex h-screen lg:flex flex-col border-r pr-1">
+            <div className="hidden h-screen lg:flex flex-col border-r border-b  pr-1">
               <News />  
             </div>
           </div>

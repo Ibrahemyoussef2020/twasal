@@ -1,10 +1,9 @@
 'use client';
 
-import { signIn, signOut , useSession } from "next-auth/react";
+import { IoMdLogIn , IoMdLogOut  } from "react-icons/io";
 
-const LoginBtn = () => {
-  
-  const {data :session} = useSession()
+
+function LoginBtn({session , signIn , signOut}) {
 
   return (
     <div>
@@ -13,17 +12,17 @@ const LoginBtn = () => {
 
         <button 
           onClick={()=> signOut()}
-          className="hidden lg:inline bg-green-600 text-white font-semibold rounded-full py-2 px-4 mt-4 w-48 hover:bg-green-700 transition-all duration-200 shadow-md">
-          تسجيل الخروج
+          className="bg-inherit hover:bg-gray-200 lg:bg-green-600 text-white text-center font-semibold rounded-full text-xs py-1 px-1 lg:py-2 lg:px-4 mt-4  lg:w-48 lg:hover:bg-green-700 transition-all duration-200 shadow-md">
+         <span className=" hidden lg:inline"> تسجيل الخروج </span> <IoMdLogIn className="text-red-500 text-4xl lg:hidden m-auto" /> 
         </button>
 
     : 
 
-      <button 
-        onClick={()=> signIn()}
-        className="hidden lg:inline bg-green-600 text-white font-semibold rounded-full py-2 px-4 mt-4 w-48 hover:bg-green-700 transition-all duration-200 shadow-md">
-        تسجيل الدخول
-      </button>
+        <button 
+          onClick={()=> signIn()}
+          className="bg-inherit hover:bg-gray-200 lg:bg-green-600 text-white text-center font-semibold rounded-full text-xs py-1 px-1 lg:py-2 lg:px-4 mt-4  lg:w-48 lg:hover:bg-green-700 transition-all duration-200 shadow-md">
+          <span className=" hidden lg:inline"> تسجيل الدخول </span> <IoMdLogOut className="text-green-500 text-4xl lg:hidden m-auto" /> 
+        </button>
       }
     </div>
   )

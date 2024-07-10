@@ -1,24 +1,46 @@
 import Link from "next/link";
+import { signIn, signOut , useSession } from "next-auth/react";
 import { FaXTwitter } from "react-icons/fa6";
 import { IoHomeSharp } from "react-icons/io5";
 import  LoginBtn  from "./LoginBtn";
 
 const Sidebar = () => {
+
+  const {data:session} = useSession()
+  console.log(session);
+
   return (
-    <aside className="dir-r pr-3 flex flex-col items-start w-full">
-      <Link href='/' className="flex justify-start text-3xl pr-0 py-4 font-extrabold text-green-700  relative">
-      <span className="pr-4"> تَوَاصَل ْ</span>
-      </Link>
+    <aside className="dir-r pr-3 text-center flex flex-col justify-between h-screen max-h-screen pb-2 items-start w-full">
+      
+      <div className=" container-one">
+        <Link href='/' className="flex justify-start text-3xl pr-0 py-4 font-extrabold text-green-700  relative">
+        <span className="lg:pr-4"> تَوَاصَل ْ</span>
+        </Link>
 
-      <Link href='/' className="flex justify-start ml-auto mr-0 items-center	 gap-2 p-3 hover:bg-gray-100 rounded-full transition-all duration-200 w-fit">
-        <IoHomeSharp  className="w-7 h-7" />
-        <span className="font-bold hidden lg:inline text-lg">
-          الرئيسية 
-        </span>
-      </Link>
+        <Link href='/' className="m-auto flex justify-start lg:ml-auto lg:mr-0 items-center	 gap-2 p-3 lg:bg-inherit hover:bg-gray-100 bg-gray-200 rounded-full transition-all duration-200 w-fit">
+          <IoHomeSharp  className="w-7 h-7" />
+          <span className="font-bold hidden lg:inline text-lg">
+            الرئيسية 
+          </span>
+        </Link>
 
-      <LoginBtn />
-     
+        <LoginBtn session={session}  signIn={signIn} signOut={signOut}/>
+      </div>
+
+      <div className=" pb-3">
+      {
+          session ? 
+          <div className=" lg:hover:bg-slate-100 text-gray-700 text-sm flex items-center p-2 cursor-pointer lg:border border-gray-200 rounded-sm">
+            <img className="w-12 h-12 ml-3 rounded-full" src={session.user.image} alt={session.user.name} />
+            <div>
+              <h4 className="hidden lg:block font-bold">{session.user.name}</h4>
+              <p className="hidden lg:block text-sm text-gray-500">{session.user.username}@</p>
+            </div>
+          </div>
+          :
+          null 
+      }
+      </div>
     </aside>
   )
 }
