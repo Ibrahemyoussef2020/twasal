@@ -7,7 +7,7 @@ import  LoginBtn  from "./LoginBtn";
 const Sidebar = () => {
 
   const {data:session} = useSession()
-  console.log(session);
+
 
   return (
     <aside className="dir-r px-1 md:pr-2 text-center flex flex-col justify-between h-screen max-h-screen pb-2 items-start w-full">

@@ -3,12 +3,19 @@
 import { useSession } from "next-auth/react";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { Textarea } from ".";
+import { useRef } from "react";
 
 const PostsUploader = () => {
     const {data:session} = useSession();
+    const imagePickRef = useRef(null);
+
 
     if (!session) {
         return <div className="not-allowed-to-upload">lll</div>
+    }
+
+    const uploadImage = ()=>{
+      console.log('l');
     }
 
   return ( 
@@ -18,9 +25,15 @@ const PostsUploader = () => {
         <div className=" text-black grow-1 flex-1">
             <Textarea />
             <div className="flex justify-between border-t border-gray-200 pt-3 pb-2">
-              <a href="/" type="file">
-                <HiOutlinePhotograph className=" h-8 w-8 text-sky-500 hover:text-sky-300" />
-              </a>
+              <label>
+                <HiOutlinePhotograph onClick={()=> imagePickRef.current.click()} className=" h-8 w-8 text-sky-500 hover:text-sky-300" />
+                <input 
+                  type="file"
+                  accept="image/*"
+                  onChange={uploadImage}
+                  ref={imagePickRef}
+                />
+              </label>
               <button className=" bg-green-700 py-1 px-3 rounded-2xl text-white text-lg hover:bg-green-600">مشاركة</button>
             </div>
         </div>
