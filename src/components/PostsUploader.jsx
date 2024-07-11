@@ -3,19 +3,24 @@
 import { useSession } from "next-auth/react";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { Textarea } from ".";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const PostsUploader = () => {
     const {data:session} = useSession();
-    const imagePickRef = useRef(null);
+    const [imgUploadedSrc , setImgUploadedSrc] = useState('');
+    const [selectedFile,setSelectedFile] = useState(null);
 
 
     if (!session) {
         return <div className="not-allowed-to-upload">lll</div>
     }
 
-    const uploadImage = ()=>{
-      console.log('l');
+    const uploadImage = (e)=>{
+      const file = e.target.files[0];
+      if (file) {
+        setSelectedFile(file);
+        setImgUploadedSrc(URL.createObjectURL(file));
+      }
     }
 
   return ( 
@@ -24,14 +29,19 @@ const PostsUploader = () => {
         
         <div className=" text-black grow-1 flex-1">
             <Textarea />
+            { selectedFile ? <img src={imgUploadedSrc} alt="uploaded image" className=" w-full max-h-[250px] object-cover  cursor-pointer"/>
+              : null
+            }
             <div className="flex justify-between border-t border-gray-200 pt-3 pb-2">
-              <label>
-                <HiOutlinePhotograph onClick={()=> imagePickRef.current.click()} className=" h-8 w-8 text-sky-500 hover:text-sky-300" />
+              <label htmlFor="upload-image-input" className=" overflow-hidden">
+                <HiOutlinePhotograph className=" h-8 w-8 text-sky-500 hover:text-sky-300" />
                 <input 
                   type="file"
                   accept="image/*"
                   onChange={uploadImage}
-                  ref={imagePickRef}
+                  id="upload-image-input"
+                  name="upload-image-input"
+                  className=" absolute -top-1 -left-1 p-[1px] w-[1px] h-[1px]"
                 />
               </label>
               <button className=" bg-green-700 py-1 px-3 rounded-2xl text-white text-lg hover:bg-green-600">مشاركة</button>
