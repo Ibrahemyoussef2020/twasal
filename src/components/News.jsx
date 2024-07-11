@@ -34,11 +34,11 @@ const News = () => {
   }, []);
 
   if (!allNews || allNews.length === 0) {
-    return <h2 className="text-3xl min-w-[390px]">تحميل الأخبار...</h2>;
+    return <h2 className="text-3xl min-w-[300px]">تحميل الأخبار...</h2>;
   } 
 
   return (
-    <aside className=" min-w-[390px] bg-gray-100 space-y-3 rounded-xl pt-2 px-2 max-w-[400px]">
+    <aside className=" w-[300px] bg-gray-100 space-y-3 rounded-xl pt-2 px-2">
       <Search 
         news={news}
         setNews={setNews}
