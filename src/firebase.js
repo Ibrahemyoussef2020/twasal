@@ -7,7 +7,8 @@ import { getAnalytics } from "firebase/analytics";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey:process.env.NEXT_BUBLIC_FIREBASE_API_KEY,
+  //apiKey:process.env.NEXT_BUBLIC_FIREBASE_API_KEY,
+  apiKey:"AIzaSyAJO1gSsj6M8NbUKGGMe34Y-lhaQRx_1WE",
   authDomain: "twasal-eb5db.firebaseapp.com",
   projectId: "twasal-eb5db",
   storageBucket: "twasal-eb5db.appspot.com",
@@ -20,4 +21,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-export {analytics , app}
+export {app}

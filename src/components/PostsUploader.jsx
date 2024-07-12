@@ -4,16 +4,31 @@ import { useSession } from "next-auth/react";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { Textarea } from ".";
 import { useRef, useState } from "react";
+import {app} from '../firebase'
+
+import{
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL
+} from 'firebase/storage'
+
+import {
+  addDoc,
+  collection,
+  getFirestore,
+  serverTimestamp,
+} from 'firebase/firestore'
 
 const PostsUploader = () => {
     const {data:session} = useSession();
     const [imgUploadedSrc , setImgUploadedSrc] = useState('');
     const [selectedFile,setSelectedFile] = useState(null);
+    const [postLoading , setPostLoading] = useState(false); 
+    const [text,setText] = useState('')
 
+    const db = getFirestore(app);
 
-    if (!session) {
-        return <div className="not-allowed-to-upload">lll</div>
-    }
 
     const uploadImage = (e)=>{
       const file = e.target.files[0];
@@ -23,13 +38,49 @@ const PostsUploader = () => {
       }
     }
 
+    const handleWritePost = (value)=>{
+      setText(value)
+    }
+
+    const handleSubmitPost = async ()=>{
+      console.log('gggggggggggggggggggggggg');
+      setPostLoading(true);
+      const docRef = await addDoc(collection(db , 'post'),{
+        id:session.user.id,
+        name:session.user.name,
+        username:session.user.username,
+        text:text,
+        profileImage:session.user.image,
+        timestamp:serverTimestamp()
+      })
+
+      setImgUploadedSrc('');
+      setText('')
+      setPostLoading(false)
+      setSelectedFile(null)
+    }
+
+
+
+    
+    if (!session) {
+      return <div className="not-allowed-to-upload">lll</div>
+  }
+
   return ( 
     <div className="flex gap-2 py-3 px-2 text-black sticky top-0 z-100 border border-gray-300 rounded-md mx-auto max-w-[550px]">
         <img src= {session.user.image} alt={session.user.name} className=" hover:brightness-50 h-11 w-11 cursor-pointer  rounded-full" />
         
         <div className=" text-black grow-1 flex-1">
-            <Textarea />
-            { selectedFile ? <img src={imgUploadedSrc} alt="uploaded image" className=" w-full max-h-[250px] object-cover  cursor-pointer"/>
+
+            <Textarea  setText={setText}/>
+
+            { selectedFile ? 
+              <img 
+                src={imgUploadedSrc} 
+                alt="uploaded image" 
+                className={`w-full max-h-[250px] object-cover cursor-pointer ${postLoading ? '' : '' }`}
+              />
               : null
             }
             <div className="flex justify-between border-t border-gray-200 pt-3 pb-2">
@@ -44,7 +95,12 @@ const PostsUploader = () => {
                   className=" absolute -top-1 -left-1 p-[1px] w-[1px] h-[1px]"
                 />
               </label>
-              <button className=" bg-green-700 py-1 px-3 rounded-2xl text-white text-lg hover:bg-green-600">مشاركة</button>
+              <button 
+                className=" bg-green-700 py-1 px-3 rounded-2xl text-white text-lg hover:bg-green-600"
+               // disabled={!text.trim() || postLoading || !selectedFile}
+                onClick={handleSubmitPost}
+                >مشاركة
+              </button>
             </div>
         </div>
     </div>
