@@ -24,7 +24,7 @@ const PostsUploader = () => {
     const {data:session} = useSession();
     const [imgUploadedSrc , setImgUploadedSrc] = useState('');
     const [selectedFile,setSelectedFile] = useState(null);
-    const [postLoading , setPostLoading] = useState(false); 
+    const [imgLoading , setImgLoading] = useState(false); 
     const [text,setText] = useState('');
     const [imgSkeltonEffect , setImgSkeltonEffect] = useState(false);
 
@@ -84,9 +84,9 @@ const PostsUploader = () => {
     }
 
     const handleSubmitPost = async ()=>{
-      setPostLoading(true);
+      setImgLoading(true);
 
-      const docRef = await addDoc(collection(db , 'post'),{
+      const docRef = await addDoc(collection(db , 'posts'),{
         id:session.user.id,
         name:session.user.name,
         username:session.user.username,
@@ -97,7 +97,7 @@ const PostsUploader = () => {
 
       setImgUploadedSrc('');
       setText('')
-      setPostLoading(false)
+      setImgLoading(false)
       setSelectedFile(null)
     }
 
@@ -120,7 +120,7 @@ const PostsUploader = () => {
               <img 
                 src={imgUploadedSrc} 
                 alt="uploaded image" 
-                className={`w-full max-h-[250px] object-cover cursor-pointer ${postLoading ? '' : '' }`}
+                className={`w-full max-h-[250px] object-cover cursor-pointer ${imgLoading ? ' animate-pulse' : '' }`}
               />
               : null
             }
@@ -137,8 +137,8 @@ const PostsUploader = () => {
                 />
               </label>
               <button 
-                className=" bg-green-700 py-1 px-3 rounded-2xl text-white text-lg hover:bg-green-600"
-               // disabled={!text.trim() || postLoading || !selectedFile}
+                className=" bg-green-700 py-1 px-3 rounded-2xl text-white text-lg hover:bg-green-600 disabled:bg-green-500 disabled:text-gray-300 "
+                disabled={!text.trim() || imgLoading }
                 onClick={handleSubmitPost}
                 >مشاركة
               </button>
