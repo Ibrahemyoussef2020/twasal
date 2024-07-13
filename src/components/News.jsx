@@ -13,8 +13,8 @@ const News = () => {
 
 
   useEffect(() => {
-  //  if (typeof window !== 'undefined') {
     if (true) {
+      
       const fetchNews = async () => {
         try {
           const response = await fetch('https://ibrahemyoussef2020.github.io/news-api-in-arabic/arabic-news.json');
