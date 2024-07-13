@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { Textarea } from ".";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {app} from '../firebase'
 
 import{
@@ -25,9 +25,17 @@ const PostsUploader = () => {
     const [imgUploadedSrc , setImgUploadedSrc] = useState('');
     const [selectedFile,setSelectedFile] = useState(null);
     const [postLoading , setPostLoading] = useState(false); 
-    const [text,setText] = useState('')
+    const [text,setText] = useState('');
+    const [imgSkeltonEffect , setImgSkeltonEffect] = useState(false);
 
     const db = getFirestore(app);
+
+
+    useEffect(()=>{
+      if (selectedFile) {
+        setImageToStorage()
+      }
+    },[selectedFile])
 
 
     const uploadImage = (e)=>{
@@ -38,13 +46,46 @@ const PostsUploader = () => {
       }
     }
 
+    const setImageToStorage = ()=>{
+      setImgSkeltonEffect(true);
+      const storgeData = getStorage(app);
+      const dataId =  `${crypto.randomUUID}-${selectedFile.name}`
+      const dataRef = ref(storgeData , dataId);
+      const uploadData = uploadBytesResumable(dataRef , selectedFile);
+
+      // snapshot functionality
+
+
+        uploadData.on('state_changed' , 
+
+          (snapshot)=>{
+            const uploadedProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100 ;
+            console.log('uploaded' + uploadedProgress + '% done');
+          },
+          (error)=>{
+            console.log(error);
+            setImgSkeltonEffect(false)
+            setImgUploadedSrc(null);
+            setSelectedFile(null)
+          },
+          ()=>{
+            getDownloadURL(uploadData.snapshot.ref)
+            .then((url) => {
+              setImgUploadedSrc(url);
+              setImgSkeltonEffect(false);
+            })
+          }
+        )
+        // snapshot functionality
+    }
+
     const handleWritePost = (value)=>{
       setText(value)
     }
 
     const handleSubmitPost = async ()=>{
-      console.log('gggggggggggggggggggggggg');
       setPostLoading(true);
+
       const docRef = await addDoc(collection(db , 'post'),{
         id:session.user.id,
         name:session.user.name,
