@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { HiOutlinePhotograph } from "react-icons/hi";
-import { Textarea } from ".";
+import  {Textarea}  from ".";
 import { useEffect, useRef, useState } from "react";
 import {app} from '../firebase'
 
@@ -49,7 +49,8 @@ const PostsUploader = () => {
     const setImageToStorage = ()=>{
       setImgSkeltonEffect(true);
       const storgeData = getStorage(app);
-      const dataId =  `${crypto.randomUUID}-${selectedFile.name}`
+      //const dataId =  `${crypto.randomUUID}-${selectedFile.name}`
+      const dataId =  `${new Date()}-${selectedFile.name}`
       const dataRef = ref(storgeData , dataId);
       const uploadData = uploadBytesResumable(dataRef , selectedFile);
 
@@ -63,7 +64,7 @@ const PostsUploader = () => {
             console.log('uploaded' + uploadedProgress + '% done');
           },
           (error)=>{
-            console.log(error);
+            console.log('snap error :' ,error);
             setImgSkeltonEffect(false)
             setImgUploadedSrc(null);
             setSelectedFile(null)
@@ -79,9 +80,7 @@ const PostsUploader = () => {
         // snapshot functionality
     }
 
-    const handleWritePost = (value)=>{
-      setText(value)
-    }
+    
 
     const handleSubmitPost = async ()=>{
       setImgLoading(true);
@@ -114,7 +113,7 @@ const PostsUploader = () => {
         
         <div className=" text-black grow-1 flex-1">
 
-            <Textarea  setText={setText}/>
+           <Textarea  setText={setText}/> 
 
             { selectedFile ? 
               <img 
