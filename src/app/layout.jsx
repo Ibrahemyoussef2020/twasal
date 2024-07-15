@@ -21,13 +21,13 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <AuthProvider>
-          <div className="flex justify-between max-w-[1200px] mx-auto">
-            <div className='hidden sm:block min-w-[100px] md:min-w-[215px] min-h-[100%]'>
-              <div className="fixed border-l border-b h-screen">
+          <div className="flex justify-between max-w-[1200px] mx-auto min-h-screen h-full">
+            <div className='hidden flex-1 sm:block min-w-[100px] md:min-w-[210px] min-h-[100%]'>
+              <div className="fixed border-b h-screen max-w-[205px]">
                 <Sidebar /> 
               </div>
             </div>
-            <main className="flex-grow lg:px-2">
+            <main className="flex-grow">
               {children}
             </main>
             <div className="hidden h-screen lg:flex flex-col">

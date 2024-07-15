@@ -6,7 +6,7 @@ import { IoMdLogIn , IoMdLogOut  } from "react-icons/io";
 function LoginBtn({session , signIn , signOut}) {
 
   return (
-    <div>
+    <div className="w-full">
       {
       session?.user?.email ? 
 

@@ -5,7 +5,7 @@ import { HiDotsHorizontal } from "react-icons/hi";
 
 const Post = ({post}) => {
   return (
-    <article className=" items-start p-3 flex border-b border-gray-200">
+    <article className=" rounded-sm  p-3 flex  items-start border-b border-gray-200 bg-white mb-4">
         <Image 
             width={45} 
             height={45} 
@@ -30,12 +30,12 @@ const Post = ({post}) => {
 
             { post?.image ? 
             <Link href={`posts/${post.id}`}>
-                <div className=" relative w-full min-h-[250px] max-h-[350px]">
+                <div className=" relative w-full">
                     
                     <img 
                         src={post.image} 
                         alt="post" 
-                        className=" rounded-2xl"
+                        className=" block rounded-2xl max-w-full max-h-full"
                     />
                 </div>
             </Link>

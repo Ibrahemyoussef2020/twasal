@@ -13,13 +13,13 @@ const Sidebar = () => {
     <aside className="dir-r px-1 md:pr-2 text-center flex flex-col justify-between h-screen max-h-screen pb-2 items-start w-full">
       
       <div className=" container-one">
-        <Link href='/' className="flex justify-start text-3xl pr-0 py-4 font-extrabold text-green-700  relative">
-        <span className="md:pr-4"> تَوَاصَل ْ</span>
+        <Link href='/' className="flex justify-start text-3xl py-4 font-extrabold text-green-700  relative">
+        <span className="lg:pr-4"> تَوَاصَل ْ</span>
         </Link>
 
-        <Link href='/' className="m-auto flex justify-start md:ml-auto md:mr-0 items-center	 gap-2 p-2 md:bg-inherit hover:bg-gray-100 bg-gray-200 rounded-full transition-all duration-200 w-fit">
+        <Link href='/' className="mx-auto my-3 flex justify-start md:ml-auto md:mr-0 items-center	 gap-2 p-2 lg:bg-inherit hover:bg-gray-100 bg-gray-200 rounded-full transition-all duration-200 w-fit">
           <IoHomeSharp  className="w-7 h-7" />
-          <span className="font-bold hidden md:inline text-md">
+          <span className="font-bold hidden md:inline text-lg">
             الرئيسية 
           </span>
         </Link>

@@ -49,8 +49,7 @@ const PostsUploader = () => {
     const setImageToStorage = ()=>{
       setImgSkeltonEffect(true);
       const storgeData = getStorage(app);
-      //const dataId =  `${crypto.randomUUID}-${selectedFile.name}`
-      const dataId =  `${new Date()}-${selectedFile.name}`
+      const dataId =  `${crypto.randomUUID}-${selectedFile.name}`
       const dataRef = ref(storgeData , dataId);
       const uploadData = uploadBytesResumable(dataRef , selectedFile);
 
@@ -110,42 +109,44 @@ const PostsUploader = () => {
   }
 
   return ( 
-    <div className="flex gap-2 py-3 px-2 text-black sticky top-0 z-100 border border-gray-300 rounded-md mx-auto max-w-[550px]">
-        <img src= {session.user.image} alt={session.user.name} className=" hover:brightness-50 h-11 w-11 cursor-pointer  rounded-full" />
+    <section className="sticky top-0 z-50 flex gap-2  text-black border-b sm:border border-gray-300 p-2 bg-gray-200">
+        <div className="bg-white w-full p-2 rounded-md">
+          <img src= {session.user.image} alt={session.user.name} className=" hover:brightness-50 h-11 w-11 cursor-pointer  rounded-full" />
         
-        <div className=" text-black grow-1 flex-1">
+          <div className=" text-black grow-1 flex-1">
 
-           <Textarea  setText={setText}/> 
+            <Textarea  setText={setText}/> 
 
-            { selectedFile ? 
-              <img 
-                src={imgUploadedSrc} 
-                alt="uploaded image" 
-                className={`w-full max-h-[250px] object-cover cursor-pointer ${imgLoading ? ' animate-pulse' : '' }`}
-              />
-              : null
-            }
-            <div className="flex justify-between border-t border-gray-200 pt-3 pb-2">
-              <label htmlFor="upload-image-input" className=" overflow-hidden">
-                <HiOutlinePhotograph className=" h-8 w-8 text-sky-500 hover:text-sky-300" />
-                <input 
-                  type="file"
-                  accept="image/*"
-                  onChange={uploadImage}
-                  id="upload-image-input"
-                  name="upload-image-input"
-                  className=" absolute -top-1 -left-1 p-[1px] w-[1px] h-[1px]"
+              { selectedFile ? 
+                <img 
+                  src={imgUploadedSrc} 
+                  alt="uploaded image" 
+                  className={`w-full max-h-[250px] object-cover cursor-pointer ${imgLoading ? ' animate-pulse' : '' }`}
                 />
-              </label>
-              <button 
-                className=" bg-green-700 py-1 px-3 rounded-2xl text-white text-lg hover:bg-green-600 disabled:bg-green-500 disabled:text-gray-300 "
-                disabled={!text.trim() || imgLoading }
-                onClick={handleSubmitPost}
-                >مشاركة
-              </button>
-            </div>
+                : null
+              }
+              <div className="flex justify-between border-t border-gray-200 pt-3 pb-2">
+                <label htmlFor="upload-image-input" className=" overflow-hidden">
+                  <HiOutlinePhotograph className=" h-8 w-8 text-sky-500 hover:text-sky-300" />
+                  <input 
+                    type="file"
+                    accept="image/*"
+                    onChange={uploadImage}
+                    id="upload-image-input"
+                    name="upload-image-input"
+                    className=" absolute -top-1 -left-1 p-[1px] w-[1px] h-[1px]"
+                  />
+                </label>
+                <button 
+                  className=" bg-green-700 py-1 px-3 rounded-2xl text-white text-lg hover:bg-green-600 disabled:bg-green-500 disabled:text-gray-300 "
+                  disabled={!text.trim() || imgLoading }
+                  onClick={handleSubmitPost}
+                  >مشاركة
+                </button>
+              </div>
+          </div>
         </div>
-    </div>
+    </section>
   )
 }
 
