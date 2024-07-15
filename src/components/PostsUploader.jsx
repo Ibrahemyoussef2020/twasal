@@ -54,7 +54,7 @@ const PostsUploader = () => {
       const dataRef = ref(storgeData , dataId);
       const uploadData = uploadBytesResumable(dataRef , selectedFile);
 
-      // snapshot functionality
+      //start snapshot functionality
 
 
         uploadData.on('state_changed' , 
@@ -77,7 +77,7 @@ const PostsUploader = () => {
             })
           }
         )
-        // snapshot functionality
+        //end snapshot functionality
     }
 
     
@@ -91,6 +91,7 @@ const PostsUploader = () => {
         username:session.user.username,
         text:text,
         profileImage:session.user.image,
+        image:imgUploadedSrc,
         timestamp:serverTimestamp()
       })
 
@@ -98,6 +99,7 @@ const PostsUploader = () => {
       setText('')
       setImgLoading(false)
       setSelectedFile(null)
+      location.reload();
     }
 
 
