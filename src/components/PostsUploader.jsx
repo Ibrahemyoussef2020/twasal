@@ -49,9 +49,9 @@ const PostsUploader = () => {
     const setImageToStorage = ()=>{
       setImgSkeltonEffect(true);
       const storgeData = getStorage(app);
-      const dataId =  `${crypto.randomUUID}-${selectedFile.name}`
-      const dataRef = ref(storgeData , dataId);
-      const uploadData = uploadBytesResumable(dataRef , selectedFile);
+      const fileName =  `${new Date().getTime()}-${selectedFile.name}`;
+      const fileRef = ref(storgeData , fileName);
+      const uploadData = uploadBytesResumable(fileRef , selectedFile);
 
       //start snapshot functionality
 
@@ -63,7 +63,7 @@ const PostsUploader = () => {
             console.log('uploaded' + uploadedProgress + '% done');
           },
           (error)=>{
-            console.log('snap error :' ,error);
+            console.log('snap errorrrrrrrrrrr :' , error);
             setImgSkeltonEffect(false)
             setImgUploadedSrc(null);
             setSelectedFile(null)
@@ -82,21 +82,22 @@ const PostsUploader = () => {
     
 
     const handleSubmitPost = async ()=>{
+      console.log('sssss' , session);
       setImgLoading(true);
 
-      const docRef = await addDoc(collection(db , 'posts'),{
-        id:session.user.id,
+        const docRef = await addDoc(collection(db , 'posts'),{
+        uid:session.user.uid,
         name:session.user.name,
         username:session.user.username,
         text:text,
         profileImage:session.user.image,
+        timestamp:serverTimestamp(),
         image:imgUploadedSrc,
-        timestamp:serverTimestamp()
-      })
+        }); 
 
+      setImgLoading(false)
       setImgUploadedSrc('');
       setText('')
-      setImgLoading(false)
       setSelectedFile(null)
       location.reload();
     }

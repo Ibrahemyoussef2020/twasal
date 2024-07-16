@@ -24,7 +24,7 @@ const Posts = async () => {
 
   return (
     <div className='p-2 bg-gray-200'> {
-      data?.map(post => <Post key={post.id} post={post} />)
+      data?.map(post => <Post key={post.id} post={post} id={post.id} />)
     }</div>
   )
 }
