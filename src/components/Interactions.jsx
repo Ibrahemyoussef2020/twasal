@@ -23,28 +23,38 @@ const Interactions = ({id,uid})=> {
     const handleLike = async ()=>{
 
         if (session) {
-
            if (isLiked) {
-                await deleteDoc(doc(db,'posts',id,'likes', session?.user.uid));
+                 deleteDoc(doc(db,'posts',id,'likes', session?.user.uid));
            }
            else{
-                await setDoc(doc(db,'posts',id,'likes', session?.user.uid),{
-                    username:session.user.username,
+                 setDoc(doc(db,'posts',id,'likes', session?.user.uid),{
+                    username:session?.user.username,
                     timestamp:serverTimestamp(),
                 });
            } 
-
         }else{
             signIn()
         }
-
     }
+
     const handleComment = ()=>{
-
+        
     }
-    const handleDelete = ()=>{
 
-    }
+    const handleDelete = async ()=>{
+        const confirmDeletion = window.confirm('متأكد من رغبتك فى حذف المنشور ؟');
+
+        if (confirmDeletion) {
+                if (session?.user?.uid === uid) {
+                    deleteDoc(doc(db,'posts',id))
+                    .then(()=>{
+                        alert('تم الحذف بنجاح');
+                        window.location.reload();
+                    })
+                    .catch(()=> alert('خطأ أثناء الحذف')) ;
+                }else alert('عفوا . لست صاحب المنشور!')
+            }
+        }
 
 
     useEffect(()=>{
@@ -75,7 +85,7 @@ const Interactions = ({id,uid})=> {
                 <button onClick={handleLike}>
                     {isLiked ?
                     <HiHeart className={`h-10 w-10 rounded-full text-red-600 font-bold transition duration-500 ease-in-out p-2 cursor-pointer hover:text-red-500 hover:bg-red-100`} />  
-                    :<HiOutlineHeart className={`h-10 w-10 rounded-full text-sky-400 transition duration-500 ease-in-out p-2 cursor-pointer hover:text-red-500 hover:bg-red-100`} />
+                    :<HiOutlineHeart className={`h-10 w-10 rounded-full transition duration-500 ease-in-out p-2 cursor-pointer hover:text-red-500 hover:bg-red-100`} />
                     }
                 </button>
     
@@ -84,9 +94,10 @@ const Interactions = ({id,uid})=> {
                 </span>
             </div>
 
+            {session?.user?.uid === uid ?
             <button onClick={handleDelete}>
                 <HiOutlineTrash className='h-10 w-10 rounded-full transition duration-500 ease-in-out p-2 cursor-pointer hover:text-red-500 hover:bg-red-100' />
-            </button>
+            </button> : null}
         </div>
     )
 }
