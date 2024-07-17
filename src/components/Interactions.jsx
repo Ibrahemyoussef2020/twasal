@@ -60,19 +60,29 @@ const Interactions = ({id,uid})=> {
     },[likedList])
 
     return (
-        <div className=" flex justify-start items-center gap-4 mt-5 pt-1 border-t border-gray-300">
-            <button onClick={handleComment}>
-                <HiOutlineChat className='h-12 w-10 rounded-full transition duration-500 ease-in-out p-2 cursor-pointer hover:text-sky-500 hover:bg-sky-100' />
-            </button>
+        <div className=" flex justify-start items-center gap-3 mt-5 pt-1 border-t border-gray-300">
+            <div className="flex items-center justify-center w-14">
+                <button onClick={handleComment}>
+                    <HiOutlineChat className='h-12 w-10 rounded-full transition duration-500 ease-in-out p-2 cursor-pointer hover:text-sky-500 hover:bg-sky-100' />
+                </button>
+                <span className="text-sm font-semibold">
+                        {likedList.length > 0 ? likedList.length : null}
+                </span>
+            </div>
 
-            {isLiked ? 
-            <button onClick={handleLike}>
-                <HiHeart className={`h-10 w-10 rounded-full text-red-600 font-bold transition duration-500 ease-in-out p-2 cursor-pointer hover:text-red-500 hover:bg-red-100`} />
-            </button>
-            :
-            <button onClick={handleLike}>
-                <HiOutlineHeart className={`h-10 w-10 rounded-full text-sky-400 transition duration-500 ease-in-out p-2 cursor-pointer hover:text-red-500 hover:bg-red-100`} />
-            </button>}
+            <div className="flex items-center justify-center w-14">
+             
+                <button onClick={handleLike}>
+                    {isLiked ?
+                    <HiHeart className={`h-10 w-10 rounded-full text-red-600 font-bold transition duration-500 ease-in-out p-2 cursor-pointer hover:text-red-500 hover:bg-red-100`} />  
+                    :<HiOutlineHeart className={`h-10 w-10 rounded-full text-sky-400 transition duration-500 ease-in-out p-2 cursor-pointer hover:text-red-500 hover:bg-red-100`} />
+                    }
+                </button>
+    
+                <span className="text-sm font-semibold">
+                    {likedList.length > 0 ? likedList.length : null}
+                </span>
+            </div>
 
             <button onClick={handleDelete}>
                 <HiOutlineTrash className='h-10 w-10 rounded-full transition duration-500 ease-in-out p-2 cursor-pointer hover:text-red-500 hover:bg-red-100' />
