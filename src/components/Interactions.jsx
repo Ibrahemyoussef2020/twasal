@@ -98,7 +98,7 @@ const Interactions = ({id,uid})=> {
                     <HiOutlineChat className='h-12 w-10 rounded-full transition duration-500 ease-in-out p-2 cursor-pointer hover:text-sky-500 hover:bg-sky-100' />
                 </button>
                 <span className="text-sm font-semibold">
-                        {comments.length > 0 ? likedList.length : null}
+                        {comments.length > 0 ? comments.length : null}
                 </span>
             </div>
 

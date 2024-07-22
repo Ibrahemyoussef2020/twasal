@@ -17,6 +17,7 @@ const CommentModal = () => {
   const [postId , setPostId] = useRecoilState(atomPostIdState);
   const [postData,setPostData] = useState({});
   const [comment,setComment] = useState('');
+  const [isCommentPublished,setIsCommentPublished] = useState(false);
 
   const {data:session} = useSession();
   const db = getFirestore(app);
@@ -30,7 +31,6 @@ const CommentModal = () => {
         postRef,
         (snapshot)=>{
           if (snapshot.exists()) {
-         //   console.log('post data');
               setPostData(snapshot.data());
           }
           else{
@@ -43,6 +43,7 @@ const CommentModal = () => {
   },[postId])
 
   const postComment = async ()=>{
+    setIsCommentPublished(true);
     addDoc(collection(db,'posts',postId,'comments'),{
       name:session.user.name,
       username:session.user.username,
@@ -52,8 +53,10 @@ const CommentModal = () => {
     })
     .then(()=>{
       setComment('')
-      setIsOpen(false)
-     navigate.push(`/posts/${postId}`);  
+      setIsOpen(false) 
+      setIsCommentPublished(false);
+      navigate.push(`/postsDetails/${postId}`); 
+      location.reload()
     })
     .catch(()=> alert('خطأ أثناء نشر التعليق'))
   }
@@ -111,8 +114,8 @@ const CommentModal = () => {
                     <button
                       onClick={postComment} 
                       disabled={!comment.trim()} 
-                      className='block w-fit  min-w-[120px] mr-auto ml-1 max-sm:w-full bg-green-600 text-white px-4 py-2 rounded-full font-bold shadow-md shadow-green-200 hover:brightness-95 disabled:opacity-80'>
-                        نشر التعليق
+                      className={`block w-fit  min-w-[120px] mr-auto ml-1 max-sm:w-full bg-green-600 text-white px-4 py-2 rounded-full font-bold shadow-md shadow-green-200 hover:brightness-95 disabled:opacity-80 ${isCommentPublished ? 'animate-pulse' : ''}`}>
+                        <span className={isCommentPublished ? '' : 'hidden'}>  جارٍ </span> نشر التعليق  
                     </button>
                   </div>
                 </div>
