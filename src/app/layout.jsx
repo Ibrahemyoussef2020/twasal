@@ -4,8 +4,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import { AuthProvider , News , Sidebar} from '../components';
+import CommentModal from '@/components/CommentModal';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] , preload:false });
 
 export const metadata = {
   title: "Tawasal",
@@ -21,13 +22,14 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <AuthProvider>
-          <div className="flex justify-between max-w-[1200px] mx-auto min-h-screen h-full">
+          <CommentModal />
+          <div className=" relative z-10 flex justify-between max-w-[1200px] mx-auto min-h-screen h-full">
             <div className='hidden flex-1 sm:block min-w-[100px] md:min-w-[210px] min-h-[100%]'>
               <div className="fixed border-b h-screen max-w-[205px]">
                 <Sidebar /> 
               </div>
             </div>
-            <main className="flex-grow">
+            <main className="flex-grow relative z-10">
               {children}
             </main>
             <div className="hidden h-screen lg:flex flex-col">

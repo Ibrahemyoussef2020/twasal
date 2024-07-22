@@ -1,5 +1,6 @@
 "use client";
 
+
 import { app } from "@/firebase";
 import { collection, deleteDoc, doc, getFirestore, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -10,12 +11,17 @@ import {
     HiHeart,
     HiOutlineTrash
  } from "react-icons/hi";
+import { useRecoilState } from "recoil";
+import {atomModalState, atomPostIdState} from '../atom/modalAtom';
 
 const Interactions = ({id,uid})=> {
     const {data:session} = useSession()
-    
+    const [isOpen , setIsOpen] = useRecoilState(atomModalState);
+    const [postId , setPostId] = useRecoilState(atomPostIdState);
     const [isLiked , setIsLiked] = useState(false);
     const [likedList,setLikedList] = useState([]);
+    const [comments,setComments] = useState([]);
+   
 
     const db = getFirestore(app);
 
@@ -37,8 +43,15 @@ const Interactions = ({id,uid})=> {
         }
     }
 
-    const handleComment = ()=>{
-        
+
+    const handleComment =  ()=>{
+        if (session) {
+            setIsOpen(!isOpen);
+            setPostId(id);
+        }
+        else{
+            signIn();
+        }
     }
 
     const handleDelete = async ()=>{
@@ -56,12 +69,21 @@ const Interactions = ({id,uid})=> {
             }
         }
 
+    useEffect(()=>{
+        const unscribe = onSnapshot(collection(db,'posts',id,'comments'), (snapshot)=> {
+            setComments(snapshot.docs)
+        })
+
+       return ()=> unscribe();
+    })    
 
     useEffect(()=>{
-        onSnapshot(collection(db,'posts',id,'likes'),(snapshot)=>{
+        const unscribe = onSnapshot(collection(db,'posts',id,'likes'),(snapshot)=>{
             setLikedList(snapshot.docs);
         })
-    },[db]);
+
+        return ()=> unscribe();
+    },[db , id]);
  
     useEffect(()=>{
         setIsLiked(
@@ -72,11 +94,11 @@ const Interactions = ({id,uid})=> {
     return (
         <div className=" flex justify-start items-center gap-3 mt-5 pt-1 border-t border-gray-300">
             <div className="flex items-center justify-center w-14">
-                <button onClick={handleComment}>
+                <button onClick={handleComment} >
                     <HiOutlineChat className='h-12 w-10 rounded-full transition duration-500 ease-in-out p-2 cursor-pointer hover:text-sky-500 hover:bg-sky-100' />
                 </button>
                 <span className="text-sm font-semibold">
-                        {likedList.length > 0 ? likedList.length : null}
+                        {comments.length > 0 ? likedList.length : null}
                 </span>
             </div>
 

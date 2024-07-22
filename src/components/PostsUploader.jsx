@@ -82,10 +82,8 @@ const PostsUploader = () => {
     
 
     const handleSubmitPost = async ()=>{
-      console.log('sssss' , session);
       setImgLoading(true);
-
-        const docRef = await addDoc(collection(db , 'posts'),{
+        const docRef = addDoc(collection(db , 'posts'),{
         uid:session.user.uid,
         name:session.user.name,
         username:session.user.username,
@@ -110,7 +108,7 @@ const PostsUploader = () => {
   }
 
   return ( 
-    <section className="sticky top-0 z-50 flex gap-2  text-black border-b sm:border border-gray-300 p-2 bg-gray-200">
+    <section className="sticky top-0 z-10 flex gap-2  text-black border-b sm:border border-gray-300 p-2 bg-gray-200">
         <div className="bg-white w-full p-2 rounded-md">
           <img src= {session.user.image} alt={session.user.name} className=" hover:brightness-50 h-11 w-11 cursor-pointer  rounded-full" />
         

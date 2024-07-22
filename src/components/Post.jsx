@@ -14,6 +14,7 @@ const Post = ({post,id}) => {
             src={post?.profileImage}
             alt="user" 
             className=" rounded-full ml-2"
+            
         />
         <div className=" flex-1">
             <div className=" flex items-center justify-between">
