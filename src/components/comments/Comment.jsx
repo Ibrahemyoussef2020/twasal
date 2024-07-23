@@ -13,6 +13,8 @@ import {
 } from 'firebase/firestore';
 import { signIn, useSession } from 'next-auth/react';
 import { app } from '@/firebase';
+import Interactions from '../Interactions';
+import Image from 'next/image';
 
 const Comment = ({ comment, commentId, originalPostId })=> {
   const [isLiked, setIsLiked] = useState(false);
@@ -72,42 +74,46 @@ const Comment = ({ comment, commentId, originalPostId })=> {
   }, [likes]);
 
   return (
-    <div className='flex p-3 border-b border-gray-200 hover:bg-gray-50 pl-10'>
-      <img
-        src={comment?.userImg}
-        alt='user-img'
-        className='h-9 w-9 rounded-full mr-4'
-      />
-      <div className='flex-1'>
-        <div className='flex items-center justify-between'>
-          <div className='flex items-center space-x-1 whitespace-nowrap'>
-            <h4 className='font-bold text-sm truncate'>{comment?.name}</h4>
-            <span className='text-xs truncate'>@{comment?.username}</span>
-          </div>
-          <HiDotsHorizontal className='text-sm' />
-        </div>
+    <article className=" hover:bg-gray-50 rounded-sm  p-3 flex  items-start border-b border-gray-200 bg-white mb-4">
+        <Image
+            width={45} 
+            height={45} 
+            src={comment?.profileImage || '/user.jpg'}
+            alt="user" 
+            className=" rounded-full ml-2"
+            
+        />
+        <div className=" flex-1">
+            <div className=" flex items-center justify-between">
+                <div className=" whitespace-nowrap">
+                    <h4 className=" truncate font-bold text-xs"> {comment?.name}</h4>
+                    <p className=" truncate text-xs">{comment?.username}@</p>
+                </div>
+                <button>
+                    <HiDotsHorizontal className=" text-sm" />
+                </button>
+            </div>
 
-        <p className='text-gray-800 text-xs my-3'>{comment?.comment}</p>
-        <div className='flex items-center'>
-          {isLiked ? (
-            <HiHeart
-              onClick={likePost}
-              className='h-8 w-8 cursor-pointer rounded-full  transition text-red-600 duration-500 ease-in-out p-2 hover:text-red-500 hover:bg-red-100'
-            />
-          ) : (
-            <HiOutlineHeart
-              onClick={likePost}
-              className='h-8 w-8 cursor-pointer rounded-full  transition duration-500 ease-in-out p-2 hover:text-red-500 hover:bg-red-100'
-            />
-          )}
-          {likes.length > 0 && (
-            <span className={`text-xs ${isLiked && 'text-red-600'}`}>
-              {likes.length}
+            <span>
+                <p className=" text-gray-700 mb-3 text-sm">{comment?.comment}</p>
             </span>
-          )}
+
+            { comment?.image ? 
+            <span>
+                <div className=" relative w-full">
+                    
+                    <img 
+                        src={comment?.image} 
+                        alt="post" 
+                        className=" block rounded-2xl max-w-full max-h-full"
+                    />
+                </div>
+            </span>
+            : null }
+
+
         </div>
-      </div>
-    </div>
+    </article>
   )
 }
 

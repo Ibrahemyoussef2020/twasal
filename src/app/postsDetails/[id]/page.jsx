@@ -8,9 +8,12 @@ import React from 'react'
 const PostDetails = async ({params}) => {
   const db = getFirestore(app);
   let data = {};
+  const {id} = params;
 
-  const  querySnapshot = await getDoc(doc(db,'posts', params.id));
+  const  querySnapshot = await getDoc(doc(db,'posts', id));
   data = {...querySnapshot?.data() , id:querySnapshot?.id};
+
+  console.log('sssssffffffffffsss' , data);
 
   return (
     <article>
@@ -18,7 +21,7 @@ const PostDetails = async ({params}) => {
         العودة إلى الصفحة الرئيسية
       </Link>
       <Post post={data} id={data.id} />
-      <Comments id={params.id} />
+      <Comments id={id} />
     </article>
   )
 }

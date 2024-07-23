@@ -1,7 +1,6 @@
 "use client";
 
 
-import { app } from "@/firebase";
 import { collection, deleteDoc, doc, getFirestore, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -13,6 +12,7 @@ import {
  } from "react-icons/hi";
 import { useRecoilState } from "recoil";
 import {atomModalState, atomPostIdState} from '../atom/modalAtom';
+import { app } from "@/firebase";
 
 const Interactions = ({id,uid})=> {
     const {data:session} = useSession()

@@ -50,7 +50,7 @@ const CommentModal = () => {
       name:session.user.name,
       username:session.user.username,
       userImage:session.user.image,
-      text:comment,
+      comment:comment,
       timeStamp:serverTimestamp(),
     })
     .then(()=>{

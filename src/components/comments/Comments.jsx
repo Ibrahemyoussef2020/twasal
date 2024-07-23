@@ -1,47 +1,51 @@
 'use client';
 
 import { app } from "@/firebase";
-import { collection, getDocs, getFirestore, onSnapshot, orderBy, query } from "firebase/firestore";
+import { collection, doc, getFirestore, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Comment from "./Comment";
 
-
-
-const Comments =  ({id}) => {
+const Comments = ({ id }) => {
   const db = getFirestore(app);
 
-
-  console.log(id);
-
   const [comments, setComments] = useState([]);
+
   useEffect(() => {
-    onSnapshot(
-      query(
-        collection(db, 'posts', id, 'comments'),
-        orderBy('timestamp', 'desc')
-      ),
-      (snapshot) => {
-        console.log(snapshot.docs);
-        setComments(snapshot.docs);
-      }
-    );
+    if (!db) return; // Ensure db is available
+
+    const commentsRef = collection(doc(db, 'posts', id), 'comments');
+
+    const unsubscribe = onSnapshot(commentsRef, (snapshot) => {
+      const fetchedComments = [];
+
+       snapshot.docs.map(doc => {
+        fetchedComments.push({id: doc.id, ...doc.data()})
+       })
+
+      setComments(fetchedComments);
+
+    }, (error) => {
+      console.error("Error fetching comments: ", error);
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
   }, [db, id]);
 
 
-  console.log(comments);
-
   return (
     <div>
-      {comments?.map((comment) => (
+      {comments.map((comment) => (
         <Comment
           key={comment.id}
-          comment={comment.data()}
+          comment={comment}
           commentId={comment.id}
           originalPostId={id}
         />
       ))}
     </div>
-  )
-}  
+  );
+};
 
-export default Comments
+export default Comments;
+
