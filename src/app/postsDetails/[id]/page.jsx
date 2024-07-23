@@ -1,8 +1,10 @@
+import Comments from '@/components/comments/Comments';
 import Post from '@/components/Post';
 import { app } from '@/firebase'
 import { doc, getDoc, getFirestore } from 'firebase/firestore'
 import Link from 'next/link';
 import React from 'react'
+
 const PostDetails = async ({params}) => {
   const db = getFirestore(app);
   let data = {};
@@ -16,6 +18,7 @@ const PostDetails = async ({params}) => {
         العودة إلى الصفحة الرئيسية
       </Link>
       <Post post={data} id={data.id} />
+      <Comments id={params.id} />
     </article>
   )
 }

@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDzxx0Dbzksso5wlV8NTbs_0QHnO-pEH5c",
-  authDomain: "tawasal-socialmedia.firebaseapp.com",
-  projectId: "tawasal-socialmedia",
-  storageBucket: "tawasal-socialmedia.appspot.com",
-  messagingSenderId: "428460331873",
-  appId: "1:428460331873:web:987960c5a3f7b3677ceb20"
+  apiKey: "AIzaSyCkBUbfV7cAjMjFYttlINQdrAIgFwhZp_4",
+  authDomain: "tawasal-3arabi.firebaseapp.com",
+  projectId: "tawasal-3arabi",
+  storageBucket: "tawasal-3arabi.appspot.com",
+  messagingSenderId: "125190796779",
+  appId: "1:125190796779:web:e1a307b9c5cbabfabe95ae"
 };
 
 // Initialize Firebase

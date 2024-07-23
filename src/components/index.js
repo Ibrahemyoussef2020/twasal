@@ -1,8 +1,5 @@
 "use client";
 
-import {default as CommentModal} from './CommentModal';
-import {default as Interactions} from './Interactions';
-
 export {default as LoginBtn} from './LoginBtn';
 export {default as Textarea} from './Textarea';
 

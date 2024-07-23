@@ -1,7 +1,7 @@
 "use client";
 
 import {useRecoilState} from 'recoil';
-import {atomModalState, atomPostIdState} from  '../atom/modalAtom';
+import {atomModalState, atomPostIdState} from  '../../atom/modalAtom';
 import Modal from 'react-modal';
 import { HiX } from 'react-icons/hi';
 import { useSession } from 'next-auth/react';
@@ -31,9 +31,11 @@ const CommentModal = () => {
         postRef,
         (snapshot)=>{
           if (snapshot.exists()) {
+              console.log('تم حفظ التعليق');
               setPostData(snapshot.data());
           }
           else{
+            console.log('خطأ أثناء التعليق');
             alert('خطأ أثناء التعليق');
           }
         }
@@ -56,7 +58,6 @@ const CommentModal = () => {
       setIsOpen(false) 
       setIsCommentPublished(false);
       navigate.push(`/postsDetails/${postId}`); 
-      location.reload()
     })
     .catch(()=> alert('خطأ أثناء نشر التعليق'))
   }
