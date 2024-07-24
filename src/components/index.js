@@ -11,3 +11,6 @@ export {default as Sidebar} from './Sidebar';
 
 export {default as AuthProvider} from './AuthProvider';
 export {default as PostsUploader} from './PostsUploader';
+
+
+export {default as CommentInterAction} from './comments/CommentInterAction'

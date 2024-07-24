@@ -1,7 +1,7 @@
 "use client";
 
 import {useRecoilState} from 'recoil';
-import {atomModalState, atomPostIdState} from  '../../atom/modalAtom';
+import {atomCommentDataState, atomIsPrimaryComment, atomModalState, atomPostIdState} from  '../../atom/modalAtom';
 import Modal from 'react-modal';
 import { HiX } from 'react-icons/hi';
 import { useSession } from 'next-auth/react';
@@ -15,6 +15,9 @@ import { useRouter } from 'next/navigation';
 const CommentModal = () => {
   const [isOpen , setIsOpen] = useRecoilState(atomModalState);
   const [postId , setPostId] = useRecoilState(atomPostIdState);
+  const [isPrimaryComment , setIsPrimaryComment] = useRecoilState(atomIsPrimaryComment);
+  const [commentAtomData , setcommentAtomData] = useRecoilState(atomCommentDataState);
+
   const [postData,setPostData] = useState({});
   const [comment,setComment] = useState('');
   const [isCommentPublished,setIsCommentPublished] = useState(false);
@@ -31,11 +34,9 @@ const CommentModal = () => {
         postRef,
         (snapshot)=>{
           if (snapshot.exists()) {
-              console.log('تم حفظ التعليق');
               setPostData(snapshot.data());
           }
           else{
-            console.log('خطأ أثناء التعليق');
             alert('خطأ أثناء التعليق');
           }
         }
@@ -47,10 +48,13 @@ const CommentModal = () => {
   const postComment = async ()=>{
     setIsCommentPublished(true);
     addDoc(collection(db,'posts',postId,'comments'),{
+      uid:session.user.uid,
       name:session.user.name,
       username:session.user.username,
       userImage:session.user.image,
       comment:comment,
+      reComment:!isPrimaryComment,
+      mainCommentData:isPrimaryComment ? {} : commentAtomData,
       timeStamp:serverTimestamp(),
     })
     .then(()=>{
@@ -78,7 +82,7 @@ const CommentModal = () => {
                   </button>
                 </div>
                 <div className='p-2 flex items-center space-x-0 relative'>
-                  <span className='z-[-1] w-0.5 h-full absolute right-8 top-11 bg-gray-300' />
+                  <span className='z-[-1] w-0.5 h-full min-h-[100px] absolute right-8 top-11 bg-gray-300' />
                   <Image
                     src={postData?.profileImage || '/user.jpg'}
                     alt=''
@@ -93,6 +97,9 @@ const CommentModal = () => {
                   </div>
                 </div>
                 <p className=' text-gray-500 mr-16 mb-2'>{postData?.text}</p>
+
+                {!isPrimaryComment ? <p className='mr-16 text-gray-600  bg-gray-200 w-fit px-2 rounded-md py-1'>  رداً على  التعليق : {commentAtomData?.text}</p> : null}
+                
                 <div className='flex items-start p-1 space-x-3'>
                   <Image
                     src={session?.user?.image || '/user.jpg'}
@@ -108,7 +115,7 @@ const CommentModal = () => {
                       onChange={(e)=> setComment(e.target.value)}
                       name="write-commet" 
                       id="write-commet"
-                      placeholder='أدخل تعليقك'
+                      placeholder={isPrimaryComment ? 'أدخل تعليقك' : 'أدخل ردك'}
                       className='w-full min-w-full p-3 resize-none border border-gray-400 rounded-lg outline-none tracking-wide min-h-[70px] text-gray-700 placeholder:text-gray-500'
                       >
                     </textarea>                    

@@ -11,7 +11,6 @@ const Comments = ({ id }) => {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    if (!db) return; // Ensure db is available
 
     const commentsRef = collection(doc(db, 'posts', id), 'comments');
 
@@ -28,7 +27,6 @@ const Comments = ({ id }) => {
       console.error("Error fetching comments: ", error);
     });
 
-    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, [db, id]);
 

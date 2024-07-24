@@ -1,12 +1,11 @@
 import React, { lazy, Suspense } from 'react';
 
-import { Inter } from "next/font/google";
 import "./globals.css";
 
 import { AuthProvider , News , Sidebar} from '../components';
 import CommentModal from '@/components/comments/CommentModal';
 
-const inter = Inter({ subsets: ["latin"] , preload:false });
+
 
 export const metadata = {
   title: "Tawasal",

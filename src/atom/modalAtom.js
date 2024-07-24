@@ -10,3 +10,13 @@ export const atomPostIdState = atom({
     default:'',
 });
 
+export const atomIsPrimaryComment = atom({
+    key:'atom-is-primary-comment',
+    default:true,
+});
+
+export const atomCommentDataState = atom({
+    key:'atom-state-to-comment-data',
+    default:{id:'',name:'',text:''},
+});
+

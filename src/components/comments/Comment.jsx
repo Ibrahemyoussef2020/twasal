@@ -15,12 +15,19 @@ import { signIn, useSession } from 'next-auth/react';
 import { app } from '@/firebase';
 import Interactions from '../Interactions';
 import Image from 'next/image';
+import { atomCommentDataState, atomIsPrimaryComment } from '@/atom/modalAtom';
+import { useRecoilState } from 'recoil';
+import { CommentInterAction } from '..';
 
-const Comment = ({ comment, commentId, originalPostId })=> {
+const Comment = ({ comment, commentId, originalPostId})=> {
   const [isLiked, setIsLiked] = useState(false);
-  const [likes, setLikes] = useState([]); // [1
+  const [likes, setLikes] = useState([]); 
   const { data: session } = useSession();
+  const [isPrimaryComment , setIsPrimaryComment] = useRecoilState(atomIsPrimaryComment)
+  const [commentAtomData , setCommentAtomData] = useRecoilState(atomCommentDataState);
+
   const db = getFirestore(app);
+
 
   const likePost = async () => {
     if (session) {
@@ -73,29 +80,37 @@ const Comment = ({ comment, commentId, originalPostId })=> {
     );
   }, [likes]);
 
+  console.log(comment);
+
   return (
-    <article className=" hover:bg-gray-50 rounded-sm  p-3 flex  items-start border-b border-gray-200 bg-white mb-4">
+    <article className=" bg-white hover:bg-gray-50 rounded-sm  pr-7  flex  items-start border-b border-gray-200  mb-4">
         <Image
-            width={45} 
-            height={45} 
-            src={comment?.profileImage || '/user.jpg'}
+            width={35} 
+            height={35} 
+            src={comment?.userImage}
             alt="user" 
             className=" rounded-full ml-2"
             
         />
         <div className=" flex-1">
+
             <div className=" flex items-center justify-between">
                 <div className=" whitespace-nowrap">
                     <h4 className=" truncate font-bold text-xs"> {comment?.name}</h4>
                     <p className=" truncate text-xs">{comment?.username}@</p>
                 </div>
-                <button>
-                    <HiDotsHorizontal className=" text-sm" />
-                </button>
             </div>
 
+            
+            {comment?.reComment ?
+              <div className='w-fit bg-gray-100 py-1 px-2 my-1'>
+                <h3 className=' text-sm text-blue-400'>{comment?.mainCommentData?.name}@</h3>
+                <p className=' text-sm text-gray-700'>{comment?.mainCommentData?.text}</p> 
+              </div>
+              : null}
+
             <span>
-                <p className=" text-gray-700 mb-3 text-sm">{comment?.comment}</p>
+                <p className=" text-gray-700 text-sm">{comment?.comment}</p>
             </span>
 
             { comment?.image ? 
@@ -111,7 +126,8 @@ const Comment = ({ comment, commentId, originalPostId })=> {
             </span>
             : null }
 
-
+          <CommentInterAction id={originalPostId} commentId={commentId} uid={comment?.uid}  comment={comment}/>
+           
         </div>
     </article>
   )

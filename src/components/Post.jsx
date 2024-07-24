@@ -5,7 +5,6 @@ import Interactions from "./Interactions";
 
 
 const Post = ({post,id}) => {
-    console.log('fffff' , post.uid);
   return (
     <article className=" hover:bg-gray-50 rounded-sm  p-3 flex  items-start border-b border-gray-200 bg-white mb-4">
         <Image 
@@ -22,17 +21,14 @@ const Post = ({post,id}) => {
                     <h4 className=" truncate font-bold text-xs"> {post?.name}</h4>
                     <p className=" truncate text-xs">{post?.username}@</p>
                 </div>
-                <button>
-                    <HiDotsHorizontal className=" text-sm" />
-                </button>
             </div>
 
-            <Link href={`posts/${id}`}>
+            <Link href={`postsDetails/${id}`}>
                 <p className=" text-gray-700 mb-3 text-sm">{post?.text}</p>
             </Link>
 
             { post?.image ? 
-            <Link href={`posts/${id}`}>
+            <Link href={`postsDetails/${id}`}>
                 <div className=" relative w-full">
                     
                     <img 
