@@ -23,12 +23,12 @@ const Post = ({post,id}) => {
                 </div>
             </div>
 
-            <Link href={`postsDetails/${id}`}>
+            <Link href={`/postsDetails/${id}`}>
                 <p className=" text-gray-700 mb-3 text-sm">{post?.text}</p>
             </Link>
 
             { post?.image ? 
-            <Link href={`postsDetails/${id}`}>
+            <Link href={`/postsDetails/${id}`}>
                 <div className=" relative w-full">
                     
                     <img 
