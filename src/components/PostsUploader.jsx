@@ -107,9 +107,9 @@ const PostsUploader = () => {
       return <div className="not-allowed-to-upload">lll</div>
   }
 
-  return ( 
-    <section className="sticky top-0 z-10 flex gap-2  text-black border-b sm:border border-gray-300 p-2 bg-gray-200">
-        <div className="bg-white w-full p-2 rounded-md">
+  return (
+    <section className="sticky top-0 overflow-hidden z-10 flex  text-black border-b sm:border border-gray-300 max-w-full p-2 bg-gray-200">
+        <div className="bg-white w-full rounded-md p-2">
           <img src= {session.user.image} alt={session.user.name} className=" hover:brightness-50 h-11 w-11 cursor-pointer  rounded-full" />
         
           <div className=" text-black grow-1 flex-1">

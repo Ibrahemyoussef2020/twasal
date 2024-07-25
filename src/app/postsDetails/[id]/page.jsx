@@ -17,9 +17,9 @@ const PostDetails = async ({params}) => {
 
   return (
     <article>
-      <Link href='/' className='block sticky top-0 z-10 text-center font-bold text-red-500 mt-2 py-1 px-2 shadow shadow-gray-400 w-full bg-white hover:bg-gray-100'>
-        العودة إلى الصفحة الرئيسية
-      </Link>
+      <a href='/' className='block  top-0 z-40 text-center font-bold text-red-500 mt-2 py-1 px-2 shadow shadow-gray-400 w-full bg-white hover:bg-gray-100 mb-5'>
+         العودة إلى الصفحة الرئيسية
+      </a>
       <Post post={data} id={data.id} />
       <Comments id={id} />
     </article>

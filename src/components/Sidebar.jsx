@@ -10,7 +10,7 @@ const Sidebar = () => {
 
 
   return (
-    <aside className="dir-r px-1 md:pr-2 text-center flex flex-col justify-between h-screen max-h-screen pb-2 items-start w-full">
+    <aside className="dir-r bg-white px-1 md:pr-2 text-center flex flex-col justify-between h-screen max-h-screen pb-2 items-start w-full">
       
       <div className=" container-one">
         <Link href='/' className="flex justify-start text-3xl py-4 font-extrabold text-green-700  relative">

@@ -72,8 +72,8 @@ const CommentModal = () => {
         {
           isOpen && 
           (
-          <div className='bg-white border-b p-2 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-60%]  z-[1000] w-[90%] max-w-[400px] custom-shadow  min-h-[150px]  border border-green-600 rounded-lg'>
-            <div className='p-3'>
+          <div className='bg-white border-b p-2 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-60%]  z-[1000] w-[95%] max-w-[400px] custom-shadow  min-h-[150px]  border border-green-600 rounded-lg'>
+            <div className='p-1 sm:p-3'>
                 <div className='mb-3 bg-white shadow-md rounded-md border border-gray-200 flex items-center p-1 hover:bg-gray-50'>
                   <button onClick={()=> setIsOpen(false)} className='w-full'>
                     <HiX 
@@ -82,7 +82,7 @@ const CommentModal = () => {
                   </button>
                 </div>
                 <div className='p-2 flex items-center space-x-0 relative'>
-                  <span className='z-[-1] w-0.5 h-full min-h-[100px] absolute right-8 top-11 bg-gray-300' />
+                  <span className='z-[-1] w-0.5 h-full min-h-[100px] absolute right-7 sm:right-8 top-11 bg-gray-300' />
                   <Image
                     src={postData?.profileImage || '/user.jpg'}
                     alt=''
@@ -98,7 +98,7 @@ const CommentModal = () => {
                 </div>
                 <p className=' text-gray-500 mr-16 mb-2'>{postData?.text}</p>
 
-                {!isPrimaryComment ? <p className='mr-16 text-gray-600  bg-gray-200 w-fit px-2 rounded-md py-1'>  رداً على  التعليق : {commentAtomData?.text}</p> : null}
+                {!isPrimaryComment ? <p className='mr-16 text-gray-600  bg-gray-200 w-fit px-2 rounded-md py-1 truncate'>  رداً على  التعليق : {commentAtomData?.text}</p> : null}
                 
                 <div className='flex items-start p-1 space-x-3'>
                   <Image

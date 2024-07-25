@@ -80,7 +80,6 @@ const Comment = ({ comment, commentId, originalPostId})=> {
     );
   }, [likes]);
 
-  console.log(comment);
 
   return (
     <article className=" bg-white hover:bg-gray-50 rounded-sm  pr-7  flex  items-start border-b border-gray-200  mb-4">
@@ -103,14 +102,14 @@ const Comment = ({ comment, commentId, originalPostId})=> {
 
             
             {comment?.reComment ?
-              <div className='w-fit bg-gray-100 py-1 px-2 my-1'>
+              <div className='w-fit bg-gray-100 py-1 px-2 mt-1 mb-2'>
                 <h3 className=' text-sm text-blue-400'>{comment?.mainCommentData?.name}@</h3>
                 <p className=' text-sm text-gray-700'>{comment?.mainCommentData?.text}</p> 
               </div>
               : null}
 
             <span>
-                <p className=" text-gray-700 text-sm">{comment?.comment}</p>
+                <p className=" text-gray-700">- {comment?.comment}</p>
             </span>
 
             { comment?.image ? 
