@@ -12,7 +12,7 @@ export const metadata = {
   description: "Egyption social media ",
 };
 
-
+export const dynamic = 'force-dynamice';
 
 export default function RootLayout({ children }) {
   return (

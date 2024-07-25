@@ -100,8 +100,8 @@ const PostsUploader = () => {
           setImgUploadedSrc('');
           setText('')
           setSelectedFile(null)
-          //location.reload();
-        }).then(()=> navigate.refresh());
+          location.reload();
+        })
     }
 
 
