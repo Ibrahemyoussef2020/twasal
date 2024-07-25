@@ -19,6 +19,8 @@ import {
   getFirestore,
   serverTimestamp,
 } from 'firebase/firestore'
+import { useRouter } from "next/navigation";
+import { toast, Toaster } from "sonner";
 
 const PostsUploader = () => {
     const {data:session} = useSession();
@@ -29,6 +31,8 @@ const PostsUploader = () => {
     const [imgSkeltonEffect , setImgSkeltonEffect] = useState(false);
 
     const db = getFirestore(app);
+
+    const navigate = useRouter();
 
 
     useEffect(()=>{
@@ -60,10 +64,8 @@ const PostsUploader = () => {
 
           (snapshot)=>{
             const uploadedProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100 ;
-            console.log('uploaded' + uploadedProgress + '% done');
           },
           (error)=>{
-            console.log('snap errorrrrrrrrrrr :' , error);
             setImgSkeltonEffect(false)
             setImgUploadedSrc(null);
             setSelectedFile(null)
@@ -83,7 +85,7 @@ const PostsUploader = () => {
 
     const handleSubmitPost = async ()=>{
       setImgLoading(true);
-        const docRef = addDoc(collection(db , 'posts'),{
+        const docRef = await addDoc(collection(db , 'posts'),{
         uid:session.user.uid,
         name:session.user.name,
         username:session.user.username,
@@ -91,23 +93,26 @@ const PostsUploader = () => {
         profileImage:session.user.image,
         timestamp:serverTimestamp(),
         image:imgUploadedSrc,
-        }); 
-
-      setImgLoading(false)
-      setImgUploadedSrc('');
-      setText('')
-      setSelectedFile(null)
-      location.reload();
+        })
+        .then(()=> toast.success('تم نشر منشورك'))
+        .then(()=>{
+          setImgLoading(false)
+          setImgUploadedSrc('');
+          setText('')
+          setSelectedFile(null)
+          location.reload();
+        })
     }
 
 
 
     
     if (!session) {
-      return <div className="not-allowed-to-upload">lll</div>
+      return <div className="not-allowed-to-upload"></div>
   }
 
   return (
+    <>
     <section className="sticky top-0 overflow-hidden z-10 flex  text-black border-b sm:border border-gray-300 max-w-full p-2 bg-gray-200">
         <div className="bg-white w-full rounded-md p-2">
           <img src= {session.user.image} alt={session.user.name} className=" hover:brightness-50 h-11 w-11 cursor-pointer  rounded-full" />
@@ -146,6 +151,8 @@ const PostsUploader = () => {
           </div>
         </div>
     </section>
+    <Toaster />
+    </>
   )
 }
 

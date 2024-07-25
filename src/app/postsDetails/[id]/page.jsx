@@ -13,7 +13,6 @@ const PostDetails = async ({params}) => {
   const  querySnapshot = await getDoc(doc(db,'posts', id));
   data = {...querySnapshot?.data() , id:querySnapshot?.id};
 
-  console.log('sssssffffffffffsss' , data);
 
   return (
     <article>

@@ -17,6 +17,7 @@ import {
 import { useRecoilState } from "recoil";
 import { app } from "@/firebase";
 import { atomCommentDataState, atomIsPrimaryComment, atomModalState, atomPostIdState } from "@/atom/modalAtom";
+import { toast, Toaster } from "sonner";
 
 const CommentInterAction = ({id,uid,commentId,comment}) => {
     const {data:session} = useSession()
@@ -37,10 +38,10 @@ const CommentInterAction = ({id,uid,commentId,comment}) => {
 
         if (session) {
            if (isLiked) {
-                 deleteDoc(doc(db,'posts',id, 'comments' , commentId , 'likes', session?.user.uid));
+                await deleteDoc(doc(db,'posts',id, 'comments' , commentId , 'likes', session?.user.uid));
            }
            else{
-                 setDoc(doc(db,'posts',id, 'comments' , commentId , 'likes', session?.user.uid),{
+                await setDoc(doc(db,'posts',id, 'comments' , commentId , 'likes', session?.user.uid),{
                     username:session?.user.username,
                     timestamp:serverTimestamp(),
                 });
@@ -73,13 +74,11 @@ const CommentInterAction = ({id,uid,commentId,comment}) => {
 
         if (confirmDeletion) {
                 if (session?.user?.uid === uid) {
-                    deleteDoc(doc(db,'posts',id, 'comments' , commentId))
-                    .then(()=>{
-                        alert('تم الحذف بنجاح');
-                        window.location.reload();
-                    })
-                    .catch(()=> alert('خطأ أثناء الحذف')) ;
-                }else alert('عفوا . لست صاحب التعليق!')
+                  await  deleteDoc(doc(db,'posts',id, 'comments' , commentId))
+                    .then(()=> toast.success('تم حذف التعليق'))
+                    .catch(()=> toast.error('خطأ أثناء الحذف')) ;
+    
+                }else toast.error('عفوا .ربما لست صاحب التعليق!')
             }
         }
 
@@ -89,7 +88,7 @@ const CommentInterAction = ({id,uid,commentId,comment}) => {
         })
 
         return ()=> unscribe();
-    }) 
+    },[db,id]) 
    
 
     useEffect(()=>{
@@ -98,7 +97,7 @@ const CommentInterAction = ({id,uid,commentId,comment}) => {
         })
 
         return ()=> unscribe();
-    },[db , id]);
+    },[db , id , commentId]);
  
     useEffect(()=>{
         setIsLiked(
@@ -109,6 +108,7 @@ const CommentInterAction = ({id,uid,commentId,comment}) => {
     
 
     return (
+        <>
         <div className=" flex justify-start items-center gap-1">
             
             <div className="flex items-center justify-center w-14">
@@ -135,6 +135,8 @@ const CommentInterAction = ({id,uid,commentId,comment}) => {
                 <HiOutlineTrash className='text-sm  h-9 w-9 rounded-full transition duration-500 ease-in-out p-2 cursor-pointer hover:text-blue-500 hover:bg-blue-100' />
             </button> : null}
         </div>
+        <Toaster />
+        </>
     )
 }
 

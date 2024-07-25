@@ -13,6 +13,9 @@ import {
 import { useRecoilState } from "recoil";
 import {atomCommentDataState, atomIsPrimaryComment, atomModalState, atomPostIdState} from '../atom/modalAtom';
 import { app } from "@/firebase";
+import { Toaster, toast } from 'sonner';
+import { useRouter } from "next/navigation";
+
 
 const Interactions = ({id,uid})=> {
     const {data:session} = useSession()
@@ -27,16 +30,17 @@ const Interactions = ({id,uid})=> {
    
 
     const db = getFirestore(app);
+    const navigate = useRouter();
 
 
     const handleLike = async ()=>{
 
         if (session) {
            if (isLiked) {
-                 deleteDoc(doc(db,'posts',id,'likes', session?.user.uid));
+                await deleteDoc(doc(db,'posts',id,'likes', session?.user.uid))
            }
            else{
-                 setDoc(doc(db,'posts',id,'likes', session?.user.uid),{
+                await setDoc(doc(db,'posts',id,'likes', session?.user.uid),{
                     username:session?.user.username,
                     timestamp:serverTimestamp(),
                 });
@@ -68,13 +72,13 @@ const Interactions = ({id,uid})=> {
 
         if (confirmDeletion) {
                 if (session?.user?.uid === uid) {
-                    deleteDoc(doc(db,'posts',id))
-                    .then(()=>{
-                        alert('تم الحذف بنجاح');
-                        window.location.reload();
-                    })
-                    .catch(()=> alert('خطأ أثناء الحذف')) ;
-                }else alert('عفوا . لست صاحب المنشور!')
+                  await  deleteDoc(doc(db,'posts',id))
+                    .then(()=> toast.success('تم حذف المنشور'))
+                    .then(()=> navigate.push('/'))
+                    .catch(()=> toast.error('خطأ أثناء الحذف')) ;
+                    
+                    
+                }else toast.error('عفوا .ربما لست صاحب المنشور!');
             }
         }
 
@@ -84,7 +88,7 @@ const Interactions = ({id,uid})=> {
         })
 
        return ()=> unscribe();
-    })    
+    },[db,id])    
 
     useEffect(()=>{
         const unscribe = onSnapshot(collection(db,'posts',id,'likes'),(snapshot)=>{
@@ -101,7 +105,9 @@ const Interactions = ({id,uid})=> {
     },[likedList])
 
     return (
+        <>
         <div className=" flex justify-start items-center gap-3 mt-5 pt-1 border-t border-gray-300">
+            
             <div className="flex items-center justify-center w-14">
                 <button onClick={handleComment} >
                     <HiOutlineChat className='h-12 w-10 rounded-full transition duration-500 ease-in-out p-2 cursor-pointer hover:text-sky-500 hover:bg-sky-100' />
@@ -130,6 +136,8 @@ const Interactions = ({id,uid})=> {
                 <HiOutlineTrash className='h-10 w-10 rounded-full transition duration-500 ease-in-out p-2 cursor-pointer hover:text-red-500 hover:bg-red-100' />
             </button> : null}
         </div>
+        <Toaster richColors />
+        </>
     )
 }
 

@@ -2,7 +2,6 @@
 
 import {useRecoilState} from 'recoil';
 import {atomCommentDataState, atomIsPrimaryComment, atomModalState, atomPostIdState} from  '../../atom/modalAtom';
-import Modal from 'react-modal';
 import { HiX } from 'react-icons/hi';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
@@ -10,6 +9,7 @@ import { addDoc, collection, doc, getFirestore, onSnapshot, serverTimestamp} fro
 import { app } from '@/firebase';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { toast, Toaster } from 'sonner';
 
 
 const CommentModal = () => {
@@ -37,7 +37,7 @@ const CommentModal = () => {
               setPostData(snapshot.data());
           }
           else{
-            alert('خطأ أثناء التعليق');
+            toast.error('خطأ أثناء التعليق');
           }
         }
       )
@@ -58,12 +58,13 @@ const CommentModal = () => {
       timeStamp:serverTimestamp(),
     })
     .then(()=>{
+      toast.success('تم نشر تعليقك')
       setComment('')
       setIsOpen(false) 
       setIsCommentPublished(false);
       navigate.push(`/postsDetails/${postId}`); 
     })
-    .catch(()=> alert('خطأ أثناء نشر التعليق'))
+    .catch(()=> toast.error('خطأ أثناء نشر التعليق'))
   }
 
 
@@ -131,6 +132,7 @@ const CommentModal = () => {
           </div>
           )
         }
+        <Toaster />
     </>
   )
 }
