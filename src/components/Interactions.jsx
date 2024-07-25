@@ -75,6 +75,7 @@ const Interactions = ({id,uid})=> {
                   await  deleteDoc(doc(db,'posts',id))
                     .then(()=> toast.success('تم حذف المنشور'))
                     .then(()=> navigate.push('/'))
+                    .then(()=> location.reload())
                     .catch(()=> toast.error('خطأ أثناء الحذف')) ;
                     
                     
