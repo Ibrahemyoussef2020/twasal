@@ -102,6 +102,7 @@ const PostsUploader = () => {
           setSelectedFile(null)
           //location.reload();
         })
+        .then((res)=> res.redirect('/'));
     }
 
 
