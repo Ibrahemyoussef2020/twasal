@@ -35,7 +35,11 @@ const News = () => {
   }, []);
 
   if (!allNews || allNews.length === 0) {
-    return <h2 className="text-3xl min-w-[300px]">تحميل الأخبار...</h2>;
+    return <div className="w-[300px]  space-y-3 rounded-xl pt-2 px-2">
+        {Array.from({ length: 5 }).map((_, index) =>{
+          return <article key={index} className={`bg-gray-100 my-1 animate-pulse w-full h-32 `} />
+        })}
+    </div>
   } 
 
   return (
