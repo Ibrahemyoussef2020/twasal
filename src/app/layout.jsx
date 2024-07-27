@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
           <div className=" relative z-10 flex justify-between max-w-[1200px] mx-auto min-h-screen h-full">
             <Sidebar /> 
              
-            <main className="flex-grow relative z-10">
+            <main className="flex-grow relative z-10 flex-1">
               {children}
             </main>
             <div className="hidden h-screen lg:flex flex-col">
