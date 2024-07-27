@@ -99,7 +99,7 @@ const CommentModal = () => {
                 </div>
                 <p className=' text-gray-500 mr-16 mb-2'>{postData?.text}</p>
 
-                {!isPrimaryComment ? <p className='mr-16 text-gray-600  bg-gray-200 w-fit px-2 rounded-md py-1 truncate'>  رداً على  التعليق : {commentAtomData?.text}</p> : null}
+                {!isPrimaryComment ? <p className='mr-16 text-gray-600  bg-gray-200 w-fit px-2 rounded-md py-1 max-w-[270px] truncate'>  رداً على  التعليق : {commentAtomData?.text}</p> : null}
                 
                 <div className='flex items-start p-1 space-x-3'>
                   <Image
