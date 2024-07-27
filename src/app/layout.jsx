@@ -23,11 +23,8 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <CommentModal />
           <div className=" relative z-10 flex justify-between max-w-[1200px] mx-auto min-h-screen h-full">
-            <div className='hidden flex-1 sm:block min-w-[100px] md:min-w-[210px] min-h-[100%]'>
-              <div className="fixed border-b h-screen max-w-[205px] bg-gray-300">
-                <Sidebar /> 
-              </div>
-            </div>
+            <Sidebar /> 
+             
             <main className="flex-grow relative z-10">
               {children}
             </main>
